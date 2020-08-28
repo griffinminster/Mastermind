@@ -41,10 +41,10 @@ public class Game {
     private int guessOrangeCount;
     private int guessWhiteCount;
 
-//    private boolean playAgain;
+    private boolean playAgain;
 
     public Game() {
-//        playAgain = false;
+        playAgain = false;
 
         filler = 0;
         solPinkCount = 0;
@@ -64,10 +64,10 @@ public class Game {
         solution = new int[5];
         guess = new int[5];
 //        solution[0] = 1;
-//        solution[1] = 3;
+//        solution[1] = 2;
 //        solution[2] = 3;
-//        solution[3] = 3;
-//        solution[4] = 2;
+//        solution[3] = 4;
+//        solution[4] = 5;
         for (int i = 0; i < solution.length; i++) {
             solution[i] = (int) (Math.random() * 6) + 1;
             if (solution[i] == PINK) {
@@ -84,8 +84,6 @@ public class Game {
                 solOrangeCount++;
             }
         }
-//        System.out.println("sP:" + solPinkCount);
-//        System.out.println("sY:" + solYellowCount);
 
         timesCalled = 0;
 
@@ -102,13 +100,12 @@ public class Game {
         REDpeg = new Color(255, 0, 0);
         WHITEpeg = new Color(255, 255, 255);
 
+        b.resetCurCol();
+        b.resetCurRow();
+
         addButtonReactors();
 //        System.out.println(Arrays.toString(solution));
     }
-
-//    public int[] getSolution() {
-//        return solution;
-//    }
 
     public void results() {
         for (int i = 0; i < solution.length; i++) {
@@ -119,10 +116,6 @@ public class Game {
         for(int i = 0; i < 5; i++){
             whitePegMethod();
         }
-//        while (((guessPinkCount <= solPinkCount && guessPinkCount > 0) || (guessGreenCount <= solGreenCount && guessGreenCount > 0) || (guessYellowCount <= solYellowCount && guessYellowCount > 0) || (guessPurpleCount <= solPurpleCount && guessPurpleCount > 0) ||
-//                (guessWhiteCount <= solWhiteCount && guessWhiteCount > 0) || (guessOrangeCount <= solOrangeCount && guessOrangeCount > 0)) && (filler < 5)) {
-//            whitePegMethod();
-//        }
         for (int i = 0; i < redPeg; i++) {
             d.fillScore(turnCount, i, REDpeg);
             d.setSmallArr(RED, turnCount, i);
@@ -153,16 +146,16 @@ public class Game {
                     "Sorry! You ran out of guesses!\nThe correct sequence was: " + Arrays.toString(finalArr) + "\nThanks for playing!",
                     "Sorry!", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
             if (exit == JOptionPane.YES_OPTION || exit == JOptionPane.CANCEL_OPTION || exit == -1) {
-                System.exit(0);
-//                int repeat = JOptionPane.showConfirmDialog(null,
-//                        "Would you like to play again?", "Play Again?",
-//                        JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-//                if (repeat == JOptionPane.YES_OPTION){
-//                    playAgain = true;
-//                }
-//                else{
-//                    playAgain = false;
-//                }
+                int repeat = JOptionPane.showConfirmDialog(null,
+                        "Would you like to play again?", "Play Again?",
+                        JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+                if (repeat == JOptionPane.YES_OPTION){
+                    b.getFrame().dispose();
+                    playAgain = true;
+                }
+                else{
+                    System.exit(0);
+                }
             }
 
         } else if (didWin()) {
@@ -170,16 +163,16 @@ public class Game {
                     "Congratulations! You cracked the solution!\nThanks for playing!",
                     "Congratulations!", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
             if (exit2 == JOptionPane.YES_OPTION || exit2 == JOptionPane.CANCEL_OPTION || exit2 == -1) {
-                System.exit(0);
-//                int repeat2 = JOptionPane.showConfirmDialog(null,
-//                        "Would you like to play again?", "Play Again?",
-//                        JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-//                if (repeat2 == JOptionPane.YES_OPTION){
-//                    playAgain = true;
-//                }
-//                else{
-//                    playAgain = false;
-//                }
+                int repeat2 = JOptionPane.showConfirmDialog(null,
+                        "Would you like to play again?", "Play Again?",
+                        JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+                if (repeat2 == JOptionPane.YES_OPTION){
+                    b.getFrame().dispose();
+                    playAgain = true;
+                }
+                else{
+                    System.exit(0);
+                }
             }
         }
     }
@@ -269,7 +262,6 @@ public class Game {
 
     public void submitButtReact() {
         b.submitButt().addActionListener(evt -> {
-//            System.out.println(Arrays.toString(guess));
             if (guess[4] != 0) {
                 b.resetCurCol();
                 b.incCurRow();
@@ -326,20 +318,15 @@ public class Game {
 
     public void redPegMethod(int i) {
         redPeg++;
-//        System.out.println("RED");
         if (solution[i] == PINK) {
             guessPinkCount--;
             solPinkCount--;
-//            System.out.println("gP:" + guessPinkCount);
-//            System.out.println("sP:" + solPinkCount);
         } else if (solution[i] == GREEN) {
             guessGreenCount--;
             solGreenCount--;
         } else if (solution[i] == YELLOW) {
             guessYellowCount--;
             solYellowCount--;
-//            System.out.println("gY:" + guessYellowCount);
-//            System.out.println("sY:" + solYellowCount);
         } else if (solution[i] == PURPLE) {
             guessPurpleCount--;
             solPurpleCount--;
@@ -353,13 +340,10 @@ public class Game {
     }
 
     public void whitePegMethod() {
-//        System.out.println("WHITE");
         if (solPinkCount > 0 && guessPinkCount > 0) {
             whitePeg++;
             guessPinkCount--;
             solPinkCount--;
-//            System.out.println("gP:" + guessPinkCount);
-//            System.out.println("sP:" + solPinkCount);
         } else if (solGreenCount > 0 && guessGreenCount > 0) {
             whitePeg++;
             guessGreenCount--;
@@ -368,8 +352,6 @@ public class Game {
             whitePeg++;
             guessYellowCount--;
             solYellowCount--;
-//            System.out.println("gY:" + guessYellowCount);
-//            System.out.println("sY:" + solYellowCount);
         } else if (solPurpleCount > 0 && guessPurpleCount > 0) {
             whitePeg++;
             guessPurpleCount--;
@@ -418,6 +400,10 @@ public class Game {
                 solOrangeCount++;
             }
         }
+    }
+
+    public boolean willPlayAgain(){
+        return playAgain;
     }
 }
 

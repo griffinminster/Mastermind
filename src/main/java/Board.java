@@ -79,6 +79,8 @@ public class Board extends JFrame {
         curCol = 0;
     }
 
+    public void resetCurRow() { curRow = 0; }
+
     public void incCurRow() {
         curRow++;
     }
